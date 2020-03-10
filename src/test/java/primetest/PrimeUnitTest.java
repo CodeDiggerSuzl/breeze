@@ -5,14 +5,15 @@ import org.junit.Test;
 
 /**
  * TDD demo
- * 编写一个函数，返回小于跟定值的max的所有素数组成的数组
+ * <p>
+ * Write a function that returns an array of all prime numbers less than max with a fixed value
  * public static int[] getPrimes(int max)
  * <p>
- * 步骤：
- * 1. 任务分解
+ * Steps：divide and conquer
+ *
  * <p>
- * 1.1 边界条件 输入 0，-1，2
- * 1.2 正常输入 9，17，30
+ * 1.1 Boundary inputs. e.g. 0，-1，2
+ * 1.2 Normal inputs. e.g. 9，17，30
  */
 public class PrimeUnitTest {
     /*
