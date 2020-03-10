@@ -1,10 +1,10 @@
 package beans.factory.support;
 
+import beans.BeanCreationException;
 import beans.BeanDefinition;
+import beans.BeanDefinitionStoreException;
 import beans.factory.BeanFactory;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import util.ClassUtils;
@@ -62,8 +62,8 @@ public class DefaultBeanFactory implements BeanFactory {
                 // put into beanDef map to get beanDefinition from this map
                 this.beanDefinitionMap.put(id, beanDef);
             }
-        } catch (DocumentException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new BeanDefinitionStoreException("IO Exception parsing XML document.");
         } finally {
             if (is != null) {
                 try {
@@ -88,7 +88,7 @@ public class DefaultBeanFactory implements BeanFactory {
         BeanDefinition definition = this.getBeanDefinition(beanId);
 
         if (definition == null) {
-            return null;
+            throw new BeanCreationException("Bean definition does not exist.");
         }
 
         ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
@@ -97,13 +97,8 @@ public class DefaultBeanFactory implements BeanFactory {
             Class<?> clz = classLoader.loadClass(beanClassName);
             // by reflect
             return clz.newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new BeanCreationException("Create the bean for" + beanClassName + "failed");
         }
-        return null;
     }
 }

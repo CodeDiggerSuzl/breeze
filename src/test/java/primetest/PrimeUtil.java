@@ -28,8 +28,7 @@ public class PrimeUtil {
 
     // Extract a method to judge an integer is a prime or not
     private static boolean isPirme(int num) {
-        int i = 0;
-        for (i = 2; i < 2 + 1; i++) {
+        for (int i = 2; i < 2 + 1; i++) {
             if (num % i == 0) {
                 break;
             }
