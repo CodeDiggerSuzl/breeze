@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +47,7 @@ public class DefaultBeanFactory implements BeanFactory {
         InputStream is = null;
         try {
             ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
-            is = classLoader.getResourceAsStream(configFilePath);
+            is = Objects.requireNonNull(classLoader).getResourceAsStream(configFilePath);
 
             SAXReader saxReader = new SAXReader();
             Document doc = saxReader.read(is);
@@ -94,6 +95,7 @@ public class DefaultBeanFactory implements BeanFactory {
         ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
         String beanClassName = definition.getBeanClassName();
         try {
+            assert classLoader != null;
             Class<?> clz = classLoader.loadClass(beanClassName);
             // by reflect
             return clz.newInstance();
