@@ -11,7 +11,7 @@ public interface BeanFactory {
     /**
      * Get Bean definition by bean id in xml files.
      * @param beanId bean id
-     * @return {@see BeanDefinition}
+     * @return the beanDefinition.
      */
     BeanDefinition getBeanDefinition(String beanId);
 

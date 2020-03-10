@@ -28,12 +28,12 @@ public class BeanFactoryTest {
      * factory: is the api that for other codes to use. interfaces.
      * support: for implements class.
      * <p>
-     * TDD steps:
+     * TDD loop steps:
      * <p>
-     * 1. write a fail test.
-     * 2. complete all code, make sure all the test unit pass.
-     * 3. refactor and improve codes.
-     * 3. start write more unit tests.
+     * 1. Write a fail test.
+     * 2. Complete all code, make sure all the test unit pass.
+     * 3. Refactor and improve codes.
+     * 3. Start write more unit tests.
      * </p>
      * <p>
      * Then run first time to fail the test.
@@ -60,26 +60,26 @@ public class BeanFactoryTest {
         assertNotNull(wind);
     }
 
-    @Test
-    // Test BeanCreationException
-    public void testInvalidBean() {
-        DefaultBeanFactory factory = new DefaultBeanFactory("wind-v1.xml");
-        try {
-            factory.getBean("invalidBean");
-        } catch (BeanCreationException e) {
-            return;
-        }
-        Assert.fail("Expect BeanCreationException");
-    }
-
-    @Test
-    // Test BeanCreationException
-    public void testInvalidXML() {
-        try {
-            new DefaultBeanFactory("test.xml");
-        } catch (BeanDefinitionStoreException e) {
-            return;
-        }
-        Assert.fail("Expect BeanDefinitionStoreException");
-    }
+//    @Test
+//    // Test BeanCreationException
+//    public void testInvalidBean() {
+//        DefaultBeanFactory factory = new DefaultBeanFactory("wind-v1.xml");
+//        try {
+//            factory.getBean("invalidBean");
+//        } catch (BeanCreationException e) {
+//            return;
+//        }
+//        Assert.fail("Expect BeanCreationException");
+//    }
+//
+//    @Test
+//    // Test BeanCreationException
+//    public void testInvalidXML() {
+//        try {
+//            new DefaultBeanFactory("test.xml");
+//        } catch (BeanDefinitionStoreException e) {
+//            return;
+//        }
+//        Assert.fail("Expect BeanDefinitionStoreException");
+//    }
 }
