@@ -19,7 +19,7 @@ public class GenericBeanDefinition implements BeanDefinition {
     }
 
     /**
-     * Get the class name。
+     * Get the class name.
      *
      * @return class name
      */

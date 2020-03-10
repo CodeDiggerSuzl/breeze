@@ -17,7 +17,7 @@ public class PrimeUtil {
         int count = 0;
         // the outer loop: 2 -> max-1
         for (int num = 2; num < max; num++) {
-            if (isPirme(num)) {
+            if (betterIsPirme(num)) {
                 primes[count++] = num;
             }
         }
@@ -28,7 +28,7 @@ public class PrimeUtil {
 
     // Extract a method to judge an integer is a prime or not
     private static boolean isPirme(int num) {
-        for (int i = 2; i < 2 + 1; i++) {
+        for (int i = 2; i / num < 2 + 1; i++) {
             if (num % i == 0) {
                 break;
             }
@@ -41,7 +41,7 @@ public class PrimeUtil {
 
     // Control and strategy now are separated.
     private static boolean betterIsPirme(int num) {
-        for (int i = 2; i < 2 + 1; i++) {
+        for (int i = 2; i < num / 2 + 1; i++) {
             if (num % i == 0) {
                 return false;
             }
