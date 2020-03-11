@@ -46,7 +46,7 @@ public class XmlBeanDefinitionReader {
             Element root = doc.getRootElement();
             Iterator<Element> iterator = root.elementIterator();
             while (iterator.hasNext()) {
-                Element element = (Element)iterator.next();
+                Element element = (Element) iterator.next();
                 String id = element.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
                 BeanDefinition beanDef = new GenericBeanDefinition(id, beanClassName);

@@ -9,8 +9,7 @@ public interface BeanFactory {
     /**
      * Get the bean instance by beanId.
      *
-     * @param beanId
-     *            beanId
+     * @param beanId beanId
      * @return Bean Instance.
      */
     Object getBean(String beanId);
