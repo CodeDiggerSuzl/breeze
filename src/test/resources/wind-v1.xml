@@ -6,7 +6,6 @@
 
     <bean id="wind" class="org.breeze.service.v1.Wind"></bean>
 
-
     <!--    test exception -->
     <bean id="invalidBean" class="org.breeze.service"></bean>
 </beans>

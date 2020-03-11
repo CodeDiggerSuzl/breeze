@@ -22,7 +22,7 @@ import java.util.Iterator;
 public class XmlBeanDefinitionReader {
     public static final String ID_ATTRIBUTE = "id";
     public static final String CLASS_ATTRIBUTE = "class";
-
+    public static final String SCOPE_ATTRIBUTE = "scope";
     BeanDefinitionRegistry registry;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
@@ -50,6 +50,12 @@ public class XmlBeanDefinitionReader {
                 String id = element.attributeValue(ID_ATTRIBUTE);
                 String beanClassName = element.attributeValue(CLASS_ATTRIBUTE);
                 BeanDefinition beanDef = new GenericBeanDefinition(id, beanClassName);
+                // get scope and set scope.
+                if (element.attribute(SCOPE_ATTRIBUTE) != null) {
+                    beanDef.setScope(element.attributeValue(SCOPE_ATTRIBUTE));
+                }
+                // judge the bean is singleton,if is singleton => only create one single instance.
+                // the next time when trying to get bean,then return this only instance.
                 this.registry.registerBeanDefinition(id, beanDef);
             }
         } catch (Exception e) {

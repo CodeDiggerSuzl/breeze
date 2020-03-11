@@ -7,5 +7,9 @@ Try to write a framework lite Spring,called Breeze.
 
 ## Basic Bean-Factory
 
+core class：
+- BeanDefinition: bean's definition now only one implement, maybe more in the future.
 
-模板設計方法
+
+- 模板设计方法
+- 单例

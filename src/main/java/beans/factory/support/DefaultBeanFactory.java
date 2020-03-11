@@ -4,6 +4,7 @@ import beans.BeanCreationException;
 import beans.BeanDefinition;
 import beans.factory.BeanFactory;
 import config.ConfigurableBeanFactory;
+import sun.plugin2.main.client.PrintBandDescriptor;
 import util.ClassUtils;
 
 import java.util.Map;
@@ -15,7 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Suz1
  * @date 2020/3/10 8:40
  */
-public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
+        implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(64);
     private ClassLoader beanClassLoader;
@@ -52,8 +54,26 @@ public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefiniti
         if (definition == null) {
             throw new BeanCreationException("Bean definition does not exist.");
         }
+        // Judge the bean is single or not
+        if (definition.isSingleton()) {
+            Object bean = this.getSingleton(beanId);
+            if (bean == null) {
+                bean = creatBean(definition);
+                this.registerSingleton(beanId, bean);
+            }
+            return bean;
+        }
+        return creatBean(definition);
+    }
+
+    /**
+     * Create a bean with bean definition, need to judge the bean's scope, setter injection and constructor injection.
+     * @param bd bean definition.
+     * @return an instance of the bean.
+     */
+    private Object creatBean(BeanDefinition bd) {
         ClassLoader classLoader = this.getBeanClassLoader();
-        String beanClassName = definition.getBeanClassName();
+        String beanClassName = bd.getBeanClassName();
         try {
             assert classLoader != null;
             Class<?> clz = classLoader.loadClass(beanClassName);

@@ -11,8 +11,7 @@ import org.breeze.service.v1.Wind;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Suz1
@@ -39,6 +38,9 @@ public class BeanFactoryTest {
         reader.loadBeanDefinition(new ClassPathResource("wind-v1.xml"));
         BeanDefinition bd = factory.getBeanDefinition("wind");
 
+        assertTrue(bd.isSingleton());
+        assertFalse(bd.isProtoType());
+        assertEquals(BeanDefinition.SCOPE_DEFAULT, bd.getScope());
         // judge if is equals to the bean we expected: by class name
         // expected, real value
         assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
@@ -46,6 +48,8 @@ public class BeanFactoryTest {
         // get the instance
         Wind wind = (Wind)factory.getBean("wind");
         assertNotNull(wind);
+        Wind wind1 = (Wind)factory.getBean("wind");
+        assertEquals(wind, wind1);
     }
 
     @Test
