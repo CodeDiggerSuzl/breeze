@@ -16,7 +16,7 @@ public class ClassPathResource implements Resource {
 
     public ClassPathResource(String filePath, ClassLoader classLoader) {
         this.filePath = filePath;
-        this.classLoader = (classLoader != null ? classLoader : ClassUtils.getDefaultClassLoader());
+        this.classLoader = classLoader != null ? classLoader : ClassUtils.getDefaultClassLoader();
     }
 
     public ClassPathResource(String filePath) {

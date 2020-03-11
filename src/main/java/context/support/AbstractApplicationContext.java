@@ -4,6 +4,7 @@ import beans.factory.support.DefaultBeanFactory;
 import beans.factory.xml.XmlBeanDefinitionReader;
 import context.ApplicationContext;
 import core.io.Resource;
+import util.ClassUtils;
 
 /**
  * Use Template-Method to extract common methods.
@@ -13,12 +14,15 @@ import core.io.Resource;
  */
 public abstract class AbstractApplicationContext implements ApplicationContext {
     private DefaultBeanFactory factory;
+    private ClassLoader beanClassLoader;
 
     public AbstractApplicationContext(String cfgFilePath) {
         factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = this.getResourceByPath(cfgFilePath);
         reader.loadBeanDefinition(resource);
+        // make factory to be configurable.
+        factory.setBeanClassLoader(this.beanClassLoader);
     }
 
     /**
@@ -38,5 +42,15 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     @Override
     public Object getBean(String beanId) {
         return factory.getBean(beanId);
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
+    }
+
+    @Override
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
     }
 }

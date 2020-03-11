@@ -3,6 +3,7 @@ package beans.factory.support;
 import beans.BeanCreationException;
 import beans.BeanDefinition;
 import beans.factory.BeanFactory;
+import config.ConfigurableBeanFactory;
 import util.ClassUtils;
 
 import java.util.Map;
@@ -14,9 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Suz1
  * @date 2020/3/10 8:40
  */
-public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
+public class DefaultBeanFactory implements ConfigurableBeanFactory, BeanDefinitionRegistry {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(64);
+    private ClassLoader beanClassLoader;
 
     /**
      * Get a xml file path form classpath then to parse the xml file,
@@ -50,7 +52,7 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         if (definition == null) {
             throw new BeanCreationException("Bean definition does not exist.");
         }
-        ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
+        ClassLoader classLoader = this.getBeanClassLoader();
         String beanClassName = definition.getBeanClassName();
         try {
             assert classLoader != null;
@@ -60,5 +62,15 @@ public class DefaultBeanFactory implements BeanFactory, BeanDefinitionRegistry {
         } catch (Exception e) {
             throw new BeanCreationException("Create the bean for" + beanClassName + "failed");
         }
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
+    }
+
+    @Override
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
     }
 }
