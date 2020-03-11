@@ -1,34 +1,28 @@
 package context.support;
 
-import beans.factory.support.DefaultBeanFactory;
-import beans.factory.xml.XmlBeanDefinitionReader;
-import context.ApplicationContext;
 import core.io.ClassPathResource;
 import core.io.Resource;
 
 /**
+ * SRP: Return this class's needed resource.
+ *
  * @author Suz1
  * @date 2020/3/11 7:12 下午
  */
-public class ClassPathXmlApplicationContext implements ApplicationContext {
+public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
 
-    private DefaultBeanFactory factory;
-
-    public ClassPathXmlApplicationContext(String xmlPath) {
-        factory = new DefaultBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        Resource resource = new ClassPathResource(xmlPath);
-        reader.loadBeanDefinition(resource);
+    public ClassPathXmlApplicationContext(String cfgFilePath) {
+        super(cfgFilePath);
     }
 
     /**
-     * Get the bean instance by beanId.
+     * Get resource by the file path.
      *
-     * @param beanId beanId
-     * @return Bean Instance.
+     * @param cfgFilePath config file path.
+     * @return Resource.
      */
     @Override
-    public Object getBean(String beanId) {
-        return factory.getBean(beanId);
+    protected Resource getResourceByPath(String cfgFilePath) {
+        return new ClassPathResource(cfgFilePath);
     }
 }

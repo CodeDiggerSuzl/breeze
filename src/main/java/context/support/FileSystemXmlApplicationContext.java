@@ -1,9 +1,5 @@
 package context.support;
 
-import beans.factory.support.DefaultBeanFactory;
-import beans.factory.xml.XmlBeanDefinitionReader;
-import context.ApplicationContext;
-import core.io.ClassPathResource;
 import core.io.FileSystemResource;
 import core.io.Resource;
 
@@ -13,26 +9,22 @@ import core.io.Resource;
  * @author Suz1
  * @date 2020/3/11 21:44
  */
-public class FileSystemXmlApplicationContext implements ApplicationContext {
+public class FileSystemXmlApplicationContext extends AbstractApplicationContext {
 
-
-    private DefaultBeanFactory factory;
-
-    public FileSystemXmlApplicationContext(String filePath) {
-        factory = new DefaultBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        Resource resource = new FileSystemResource(filePath);
-        reader.loadBeanDefinition(resource);
+    public FileSystemXmlApplicationContext(String cfgFilePath) {
+        super(cfgFilePath);
     }
 
     /**
-     * Get the bean instance by beanId.
+     * Get resource by the file path.
      *
-     * @param beanId beanId
-     * @return Bean Instance.
+     * @param cfgFilePath config file path.
+     * @return Resource.
      */
     @Override
-    public Object getBean(String beanId) {
-        return factory.getBean(beanId);
+    protected Resource getResourceByPath(String cfgFilePath) {
+        return new FileSystemResource(cfgFilePath);
     }
+
+
 }

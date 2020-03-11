@@ -6,3 +6,6 @@ Try to write a framework lite Spring,called Breeze.
 - TDD
 
 ## Basic Bean-Factory
+
+
+模板設計方法
