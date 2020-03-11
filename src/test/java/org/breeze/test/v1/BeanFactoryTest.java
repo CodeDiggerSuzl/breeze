@@ -5,6 +5,7 @@ import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
 import beans.factory.support.DefaultBeanFactory;
 import beans.factory.xml.XmlBeanDefinitionReader;
+import core.io.ClassPathResource;
 import junit.framework.Assert;
 import org.breeze.service.v1.Wind;
 import org.junit.Before;
@@ -35,7 +36,7 @@ public class BeanFactoryTest {
      */
     @Test
     public void testGetBean() {
-        reader.loadBeanDefinition("wind-v1.xml");
+        reader.loadBeanDefinition(new ClassPathResource("wind-v1.xml"));
         BeanDefinition bd = factory.getBeanDefinition("wind");
 
         // judge if is equals to the bean we expected: by class name
@@ -50,8 +51,7 @@ public class BeanFactoryTest {
     @Test
     // Test BeanCreationException
     public void testInvalidBean() {
-        reader.loadBeanDefinition("wind-v1.xml");
-        BeanDefinition bd = factory.getBeanDefinition("wind");
+        reader.loadBeanDefinition(new ClassPathResource("wind-v1.xml"));
         try {
             factory.getBean("invalidBean");
         } catch (BeanCreationException e) {
@@ -64,7 +64,7 @@ public class BeanFactoryTest {
     // Test BeanCreationException
     public void testInvalidXML() {
         try {
-            reader.loadBeanDefinition("xxx.xml");
+            reader.loadBeanDefinition(new ClassPathResource("xxx.xml"));
         } catch (BeanDefinitionStoreException e) {
             return;
         }

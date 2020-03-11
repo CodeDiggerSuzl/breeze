@@ -1,5 +1,6 @@
 package org.breeze.test.v1;
 
+import context.support.FileSystemXmlApplicationContext;
 import org.breeze.service.v1.Wind;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +18,14 @@ public class ApplicationContextTest {
     @Test
     public void testGetBean() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("wind-v1.xml");
-        Wind wind = (Wind)ctx.getBean("wind");
+        Wind wind = (Wind) ctx.getBean("wind");
         Assert.assertNotNull(wind);
     }
 
+    @Test
+    public void testGetBeanFromFileSystemContext() {
+        ApplicationContext ctx = new FileSystemXmlApplicationContext("E:\\dev\\mine\\java\\breeze\\src\\test\\resources\\wind-v1.xml");
+        Wind wind = (Wind)ctx.getBean("wind");
+        Assert.assertNotNull(wind);
+    }
 }

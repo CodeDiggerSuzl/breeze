@@ -4,20 +4,24 @@ import beans.factory.support.DefaultBeanFactory;
 import beans.factory.xml.XmlBeanDefinitionReader;
 import context.ApplicationContext;
 import core.io.ClassPathResource;
+import core.io.FileSystemResource;
 import core.io.Resource;
 
 /**
+ * Get
+ *
  * @author Suz1
- * @date 2020/3/11 7:12 下午
+ * @date 2020/3/11 21:44
  */
-public class ClassPathXmlApplicationContext implements ApplicationContext {
+public class FileSystemXmlApplicationContext implements ApplicationContext {
+
 
     private DefaultBeanFactory factory;
 
-    public ClassPathXmlApplicationContext(String xmlPath) {
+    public FileSystemXmlApplicationContext(String filePath) {
         factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-        Resource resource = new ClassPathResource(xmlPath);
+        Resource resource = new FileSystemResource(filePath);
         reader.loadBeanDefinition(resource);
     }
 

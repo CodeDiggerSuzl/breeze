@@ -4,10 +4,10 @@ import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
 import beans.factory.support.BeanDefinitionRegistry;
 import beans.factory.support.GenericBeanDefinition;
+import core.io.Resource;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import util.ClassUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,13 +32,13 @@ public class XmlBeanDefinitionReader {
     /**
      * Load file from file path.
      *
-     * @param configFilePath file path.
+     * @param resource resource.
      */
-    public void loadBeanDefinition(String configFilePath) {
+    public void loadBeanDefinition(Resource resource) {
+
         InputStream is = null;
         try {
-            ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
-            is = classLoader != null ? classLoader.getResourceAsStream(configFilePath) : null;
+            is = resource.getInputStream();
             SAXReader saxReader = new SAXReader();
             Document doc = saxReader.read(is);
 
@@ -53,7 +53,7 @@ public class XmlBeanDefinitionReader {
                 this.registry.registerBeanDefinition(id, beanDef);
             }
         } catch (Exception e) {
-            throw new BeanDefinitionStoreException("IO Exception while parsing XML document form " + configFilePath, e);
+            throw new BeanDefinitionStoreException("IO Exception while parsing XML document form " + resource.getDescription(), e);
         } finally {
             if (is != null) {
                 try {

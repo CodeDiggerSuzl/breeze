@@ -33,7 +33,7 @@ public class ClassPathResource implements Resource {
     public InputStream getInputStream() throws IOException {
         InputStream is = this.classLoader.getResourceAsStream(this.filePath);
         if (is == null) {
-            throw new FileNotFoundException(filePath + "can not be opened");
+            throw new FileNotFoundException(filePath + "cannot be opened");
         }
         return is;
     }
