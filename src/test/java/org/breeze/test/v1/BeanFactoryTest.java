@@ -4,6 +4,7 @@ import beans.BeanCreationException;
 import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
 import beans.factory.BeanFactory;
+import beans.factory.xml.XmlBeanDefinitionReader;
 import beans.factory.support.DefaultBeanFactory;
 import junit.framework.Assert;
 import org.breeze.service.v1.Wind;
@@ -26,14 +27,15 @@ public class BeanFactoryTest {
      */
     @Test
     public void testGetBean() {
-        // beanFactory is an interface
-        BeanFactory factory = new DefaultBeanFactory("wind-v1.xml");
+        DefaultBeanFactory factory = new DefaultBeanFactory();
         // get bean definition form bean factory
-        BeanDefinition bd = factory.getBeanDefinition("wind"); // id
-
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader((BeanFactory) factory);
+        reader.loadBeanDefinition("wind-v1.xml");
+         factory.getBeanDefinition()
+        BeanDefinition bd = factory.getBeanD("wind");
         // judge if is equals to the bean we expected: by class name
         // expected, real value
-        assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
+        assertEquals("org.breeze.service.v1.Wind", .getBeanClassName());
 
         // get the instance
         Wind wind = (Wind) factory.getBean("wind");
