@@ -3,11 +3,11 @@ package org.breeze.test.v1;
 import beans.BeanCreationException;
 import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
-import beans.factory.BeanFactory;
-import beans.factory.xml.XmlBeanDefinitionReader;
 import beans.factory.support.DefaultBeanFactory;
+import beans.factory.xml.XmlBeanDefinitionReader;
 import junit.framework.Assert;
 import org.breeze.service.v1.Wind;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -19,7 +19,15 @@ import static org.junit.Assert.assertNotNull;
  */
 public class BeanFactoryTest {
 
+    DefaultBeanFactory factory = null;
+    XmlBeanDefinitionReader reader = null;
 
+    @Before
+    public void  setUp() {
+        factory = new DefaultBeanFactory();
+        reader = new XmlBeanDefinitionReader(factory);
+
+    }
     /**
      * Test to get entity form xml files.
      * <p>
@@ -27,25 +35,23 @@ public class BeanFactoryTest {
      */
     @Test
     public void testGetBean() {
-        DefaultBeanFactory factory = new DefaultBeanFactory();
-        // get bean definition form bean factory
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader((BeanFactory) factory);
         reader.loadBeanDefinition("wind-v1.xml");
-         factory.getBeanDefinition()
-        BeanDefinition bd = factory.getBeanD("wind");
+        BeanDefinition bd = factory.getBeanDefinition("wind");
+
         // judge if is equals to the bean we expected: by class name
         // expected, real value
-        assertEquals("org.breeze.service.v1.Wind", .getBeanClassName());
+        assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
 
         // get the instance
-        Wind wind = (Wind) factory.getBean("wind");
+        Wind wind = (Wind)factory.getBean("wind");
         assertNotNull(wind);
     }
 
     @Test
     // Test BeanCreationException
     public void testInvalidBean() {
-        DefaultBeanFactory factory = new DefaultBeanFactory("wind-v1.xml");
+        reader.loadBeanDefinition("wind-v1.xml");
+        BeanDefinition bd = factory.getBeanDefinition("wind");
         try {
             factory.getBean("invalidBean");
         } catch (BeanCreationException e) {
@@ -58,7 +64,7 @@ public class BeanFactoryTest {
     // Test BeanCreationException
     public void testInvalidXML() {
         try {
-            new DefaultBeanFactory("test.xml");
+            reader.loadBeanDefinition("xxx.xml");
         } catch (BeanDefinitionStoreException e) {
             return;
         }
