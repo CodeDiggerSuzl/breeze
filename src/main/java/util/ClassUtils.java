@@ -3,7 +3,7 @@ package util;
 import javax.annotation.Nullable;
 
 /**
- * For load class from disk
+ * For load class from disk.
  *
  * @author Suz1
  * @date 2020/3/10 19:52

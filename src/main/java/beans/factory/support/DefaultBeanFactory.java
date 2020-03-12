@@ -2,9 +2,7 @@ package beans.factory.support;
 
 import beans.BeanCreationException;
 import beans.BeanDefinition;
-import beans.factory.BeanFactory;
 import config.ConfigurableBeanFactory;
-import sun.plugin2.main.client.PrintBandDescriptor;
 import util.ClassUtils;
 
 import java.util.Map;
@@ -68,6 +66,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 
     /**
      * Create a bean with bean definition, need to judge the bean's scope, setter injection and constructor injection.
+     *
      * @param bd bean definition.
      * @return an instance of the bean.
      */
@@ -85,12 +84,12 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
     }
 
     @Override
-    public void setBeanClassLoader(ClassLoader beanClassLoader) {
-        this.beanClassLoader = beanClassLoader;
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
     }
 
     @Override
-    public ClassLoader getBeanClassLoader() {
-        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
     }
 }

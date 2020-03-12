@@ -23,11 +23,12 @@ public class BeanFactoryTest {
     XmlBeanDefinitionReader reader = null;
 
     @Before
-    public void  setUp() {
+    public void setUp() {
         factory = new DefaultBeanFactory();
         reader = new XmlBeanDefinitionReader(factory);
 
     }
+
     /**
      * Test to get entity form xml files.
      * <p>
@@ -40,15 +41,15 @@ public class BeanFactoryTest {
 
         assertTrue(bd.isSingleton());
         assertFalse(bd.isProtoType());
-        assertEquals(BeanDefinition.SCOPE_DEFAULT, bd.getScope());
+        assertEquals(BeanDefinition.SCOPE_SINGLETON, bd.getScope());
         // judge if is equals to the bean we expected: by class name
         // expected, real value
         assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
 
         // get the instance
-        Wind wind = (Wind)factory.getBean("wind");
+        Wind wind = (Wind) factory.getBean("wind");
         assertNotNull(wind);
-        Wind wind1 = (Wind)factory.getBean("wind");
+        Wind wind1 = (Wind) factory.getBean("wind");
         assertEquals(wind, wind1);
     }
 

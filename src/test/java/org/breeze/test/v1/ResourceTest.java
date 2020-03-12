@@ -32,7 +32,7 @@ public class ResourceTest {
     @Test
     public void testFileSystemResource() throws IOException {
         // FiXME hard code
-        Resource r = new FileSystemResource("E:\\dev\\mine\\java\\breeze\\src\\test\\resources\\wind-v1.xml");
+        Resource r = new FileSystemResource("/Users/suzl/dev/java/breeze/src/test/resources/wind-v1.xml");
         try (InputStream is = r.getInputStream()) {
             Assert.assertNotNull(is);
         }

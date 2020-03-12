@@ -1,6 +1,5 @@
 package beans.factory.support;
 
-import com.google.errorprone.annotations.Var;
 import config.SingletonBeanRegistry;
 import util.Assert;
 

@@ -5,9 +5,9 @@ package beans;
  * @date 2020/3/10 8:42
  */
 public interface BeanDefinition {
-    public static final String SCOPE_SINGLETON = "singleton";
-    public static final String SCOPE_PROTOTYPE = "prototype";
-    public static final String SCOPE_DEFAULT = "";
+    String SCOPE_SINGLETON = "singleton";
+    String SCOPE_PROTOTYPE = "prototype";
+    String SCOPE_DEFAULT = "";
 
     /**
      * Judge this bean is singleton or not.
