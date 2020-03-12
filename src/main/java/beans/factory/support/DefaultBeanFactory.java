@@ -56,12 +56,12 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         if (definition.isSingleton()) {
             Object bean = this.getSingleton(beanId);
             if (bean == null) {
-                bean = creatBean(definition);
+                bean = createBean(definition);
                 this.registerSingleton(beanId, bean);
             }
             return bean;
         }
-        return creatBean(definition);
+        return createBean(definition);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
      * @param bd bean definition.
      * @return an instance of the bean.
      */
-    private Object creatBean(BeanDefinition bd) {
+    private Object createBean(BeanDefinition bd) {
         ClassLoader classLoader = this.getBeanClassLoader();
         String beanClassName = bd.getBeanClassName();
         try {

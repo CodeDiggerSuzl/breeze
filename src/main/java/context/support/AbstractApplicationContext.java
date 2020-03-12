@@ -16,13 +16,24 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     private DefaultBeanFactory factory;
     private ClassLoader beanClassLoader;
 
+    /**
+     * Another constructor to config class loader.
+     *
+     * @param cfgFilePath config file path.
+     */
     public AbstractApplicationContext(String cfgFilePath) {
+        this(cfgFilePath, ClassUtils.getDefaultClassLoader());
+    }
+
+    public AbstractApplicationContext(String cfgFilePath, ClassLoader classLoader) {
         factory = new DefaultBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         Resource resource = this.getResourceByPath(cfgFilePath);
         reader.loadBeanDefinition(resource);
         // make factory to be configurable.
-        factory.setBeanClassLoader(this.beanClassLoader);
+        // if without the method above, this class loader due to the setter method,this class loader will always be null.
+        // Then it will become the default loader.
+        factory.setBeanClassLoader(classLoader);
     }
 
     /**
@@ -45,12 +56,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     @Override
-    public void setBeanClassLoader(ClassLoader beanClassLoader) {
-        this.beanClassLoader = beanClassLoader;
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
     }
 
     @Override
-    public ClassLoader getBeanClassLoader() {
-        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
     }
 }

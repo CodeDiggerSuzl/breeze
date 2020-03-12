@@ -6,11 +6,12 @@ package util;
  * @author Suz1
  * @date 2020/3/11 9:14 下午
  */
-public class Assert {
+public abstract class AbstractAssert {
     /**
      * Check a object is null or not,if null throw exception.
+     * A runtime exception.
      *
-     * @param object  tho be tested
+     * @param object  the object to be tested
      * @param message throw msg.
      */
     public static void notNull(Object object, String message) {

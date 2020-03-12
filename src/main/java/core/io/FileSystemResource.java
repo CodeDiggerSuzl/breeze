@@ -1,6 +1,6 @@
 package core.io;
 
-import util.Assert;
+import util.AbstractAssert;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +17,7 @@ public class FileSystemResource implements Resource {
     private final File file;
 
     public FileSystemResource(String path) {
-        Assert.notNull(path, "Path can not be null");
+        AbstractAssert.notNull(path, "Path can not be null");
         this.file = new File(path);
         this.path = path;
     }

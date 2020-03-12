@@ -12,6 +12,7 @@ public class ClassUtils {
 
     /**
      * Get default class loader.
+     * Exactly like spring source code.
      *
      * @return {@link java.lang.ClassLoader}
      */

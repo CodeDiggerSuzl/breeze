@@ -23,7 +23,9 @@ public class ApplicationContextTest {
 
     @Test
     public void testGetBeanFromFileSystemContext() {
-        ApplicationContext ctx = new FileSystemXmlApplicationContext("/Users/suzl/dev/java/breeze/src/test/resources/wind-v1.xml");
+        // Fix: change file path from absolute file path to relative file path to fix hard code problem.
+        // ApplicationContext ctx = new FileSystemXmlApplicationContext("/Users/suzl/dev/java/breeze/src/test/resources/wind-v1.xml");
+        ApplicationContext ctx = new FileSystemXmlApplicationContext("src/test/resources/wind-v1.xml");
         Wind wind = (Wind) ctx.getBean("wind");
         Assert.assertNotNull(wind);
     }

@@ -1,7 +1,7 @@
 package beans.factory.support;
 
 import config.SingletonBeanRegistry;
-import util.Assert;
+import util.AbstractAssert;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +22,7 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
      */
     @Override
     public void registerSingleton(String beanName, Object singletonObject) {
-        Assert.notNull(beanName, "'beanName' must not be null.");
+        AbstractAssert.notNull(beanName, "'beanName' must not be null.");
         Object oldObject = this.singletonObjects.get(beanName);
         if (oldObject != null) {
             throw new IllegalStateException("Could not register object [" + singletonObject + "] under bean name '" + beanName
