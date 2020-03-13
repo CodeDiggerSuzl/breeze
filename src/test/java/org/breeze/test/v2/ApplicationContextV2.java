@@ -25,5 +25,6 @@ public class ApplicationContextV2 {
         assertTrue(petStore.getItem() instanceof Item);
         // Test String type
         assertEquals("Leonard", petStore.getBoss());
+        assertEquals(2, petStore.getVersion());
     }
 }

@@ -3,6 +3,7 @@ package beans.factory.support;
 import beans.BeanCreationException;
 import beans.BeanDefinition;
 import beans.PropertyValue;
+import beans.SimpleTypeConverter;
 import config.ConfigurableBeanFactory;
 import util.ClassUtils;
 
@@ -102,6 +103,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
             return;
         }
         BeanDefinitionResolver resolver = new BeanDefinitionResolver(this);
+        // converter
+        SimpleTypeConverter converter = new SimpleTypeConverter();
         try {
             for (PropertyValue pv : propertyValues) {
                 String propertyName = pv.getName();
@@ -112,7 +115,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
                 PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
                 for (PropertyDescriptor pd : propertyDescriptors) {
                     if (pd.getName().equals(propertyName)) {
-                        pd.getWriteMethod().invoke(bean, resolveValue);
+                        Object convertedValue = converter.convertIfNecessary(resolveValue, pd.getPropertyType());
+                        pd.getWriteMethod().invoke(bean, convertedValue);
                         break;
                     }
                 }

@@ -5,6 +5,8 @@ public class PetStore {
     private Item item;
     private String boss;
 
+    private int version;
+
     // can not have constructor with args.
     // public PetStoreService(Account account, Item item) {
     //    this.account = account;
@@ -34,4 +36,13 @@ public class PetStore {
     public void setItem(Item item) {
         this.item = item;
     }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
 }

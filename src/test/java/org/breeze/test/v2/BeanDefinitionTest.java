@@ -24,7 +24,7 @@ public class BeanDefinitionTest {
         reader.loadBeanDefinition(new ClassPathResource("petStore.xml"));
         BeanDefinition bd = factory.getBeanDefinition("petStore");
         List<PropertyValue> pvs = bd.getPropertyValues();
-        Assert.assertEquals(2, pvs.size());
+        Assert.assertEquals(5, pvs.size());
         // no exact order.
         {
             PropertyValue pv = this.getPropertyValues("account", pvs);

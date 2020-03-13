@@ -44,7 +44,7 @@ public class BeanFactoryTest {
         assertEquals(BeanDefinition.SCOPE_SINGLETON, bd.getScope());
         // judge if is equals to the bean we expected: by class name
         // expected, real value
-        assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
+        assertEquals("org.breeze.entity.v1.Wind", bd.getBeanClassName());
 
         // get the instance
         Wind wind = (Wind) factory.getBean("wind");

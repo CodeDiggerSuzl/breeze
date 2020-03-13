@@ -8,6 +8,8 @@
         <property name="account" ref="account"/>
         <property name="item" ref="item"/>
         <property name="boss" value="Leonard"/>
+        <property name="version" value="2"/>
+        <property name="switch" value="true"/>
     </bean>
 
     <bean id="account" class="org.breeze.entity.v2.Account"/>
