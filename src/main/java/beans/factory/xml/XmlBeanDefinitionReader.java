@@ -2,12 +2,18 @@ package beans.factory.xml;
 
 import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
+import beans.PropertyValue;
 import beans.factory.support.BeanDefinitionRegistry;
 import beans.factory.support.GenericBeanDefinition;
+import config.RunTimeBeanReference;
+import config.TypeStringValue;
 import core.io.Resource;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,9 +26,21 @@ import java.util.Iterator;
  * @date 2020/3/11 16:44
  */
 public class XmlBeanDefinitionReader {
+    // Basic definitions.
+
     public static final String ID_ATTRIBUTE = "id";
     public static final String CLASS_ATTRIBUTE = "class";
     public static final String SCOPE_ATTRIBUTE = "scope";
+
+    // For Setter injection.
+
+    public static final String PROPERTY_ELEMENT = "property";
+    public static final String REF_ATTRIBUTE = "ref";
+    public static final String VALUE_ATTRIBUTE = "value";
+    public static final String NAME_ATTRIBUTE = "name";
+    // for log
+    protected final Log Logger = LogFactory.getLog(getClass());
+
     BeanDefinitionRegistry registry;
 
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
@@ -54,6 +72,7 @@ public class XmlBeanDefinitionReader {
                 if (element.attribute(SCOPE_ATTRIBUTE) != null) {
                     beanDef.setScope(element.attributeValue(SCOPE_ATTRIBUTE));
                 }
+                parsePropertyElement(element, beanDef);
                 // judge the bean is singleton,if is singleton => only create one single instance.
                 // the next time when trying to get bean,then return this only instance.
                 this.registry.registerBeanDefinition(id, beanDef);
@@ -68,6 +87,47 @@ public class XmlBeanDefinitionReader {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /**
+     * Parse element property.
+     *
+     * @param beanElem xml element.
+     * @param bd       bean definition.
+     */
+    public void parsePropertyElement(Element beanElem, BeanDefinition bd) {
+        Iterator iterator = beanElem.elementIterator(PROPERTY_ELEMENT);
+        while (iterator.hasNext()) {
+            Element propElem = (Element) iterator.next();
+            String propertyName = propElem.attributeValue(NAME_ATTRIBUTE);
+            if (!StringUtils.hasLength(propertyName)) {
+                Logger.fatal("Tag 'property' must have a name attribute ");
+                return;
+            }
+            Object val = parsePropertyValue(propElem, bd, propertyName);
+            PropertyValue pv = new PropertyValue(propertyName, val);
+            bd.getPropertyValues().add(pv);
+        }
+    }
+
+    // I just like coding, man oh han.
+    public Object parsePropertyValue(Element element, BeanDefinition beanDefinition, String propertyName) {
+        String elementName = propertyName != null ? "<property> element for property '" + propertyName + "'" : "<constructor-arg> element";
+
+        boolean hasRefAttribute = element.attribute(REF_ATTRIBUTE) != null;
+        boolean hasValueAttribute = element.attribute(VALUE_ATTRIBUTE) != null;
+
+        if (hasRefAttribute) {
+            String refName = element.attributeValue(REF_ATTRIBUTE);
+            if (!StringUtils.hasText(refName)) {
+                Logger.error(elementName + "contains empty 'ref' attributes");
+            }
+            return new RunTimeBeanReference(refName);
+        } else if (hasValueAttribute) {
+            return new TypeStringValue(element.attributeValue(VALUE_ATTRIBUTE));
+        } else {
+            throw new RuntimeException(elementName + "must specify a ref or value");
         }
     }
 }

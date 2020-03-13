@@ -7,7 +7,7 @@ import beans.factory.support.DefaultBeanFactory;
 import beans.factory.xml.XmlBeanDefinitionReader;
 import core.io.ClassPathResource;
 import junit.framework.Assert;
-import org.breeze.service.v1.Wind;
+import org.breeze.entity.v1.Wind;
 import org.junit.Before;
 import org.junit.Test;
 

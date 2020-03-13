@@ -57,7 +57,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
     @Override
     public ClassLoader getBeanClassLoader() {
-        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
+        return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
     }
 
     @Override

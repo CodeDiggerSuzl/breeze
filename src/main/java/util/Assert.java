@@ -6,7 +6,7 @@ package util;
  * @author Suz1
  * @date 2020/3/11 9:14 下午
  */
-public abstract class AbstractAssert {
+public abstract class Assert {
     /**
      * Check a object is null or not,if null throw exception.
      * A runtime exception.

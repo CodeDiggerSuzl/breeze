@@ -1,4 +1,4 @@
-package org.breeze.service.v1;
+package org.breeze.entity.v1;
 
 /**
  * @author Suz1

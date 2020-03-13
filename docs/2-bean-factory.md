@@ -25,7 +25,7 @@ public void testGetBean() {
 
     // judge if is equals to the bean we expected: by class name
     // expected, real value
-    assertEquals("org.breeze.service.v1.Wind", bd.getBeanClassName());
+    assertEquals("Wind", bd.getBeanClassName());
 
     // get the instance
     Wind wind = (Wind) factory.getBean("wind");

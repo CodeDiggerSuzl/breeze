@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.List;
+
 /**
  * @author Suz1
  * @date 2020/3/10 8:42
@@ -43,4 +45,11 @@ public interface BeanDefinition {
      * @return class name
      */
     String getBeanClassName();
+
+    /**
+     * Get property value.
+     *
+     * @return list of value.
+     */
+    List<PropertyValue> getPropertyValues();
 }

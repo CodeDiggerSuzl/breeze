@@ -2,9 +2,14 @@ package beans.factory.support;
 
 import beans.BeanCreationException;
 import beans.BeanDefinition;
+import beans.PropertyValue;
 import config.ConfigurableBeanFactory;
 import util.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,22 +75,56 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
      * @param bd bean definition.
      * @return an instance of the bean.
      */
-    private Object createBean(BeanDefinition bd) {
+    private Object instantiateBean(BeanDefinition bd) {
         ClassLoader classLoader = this.getBeanClassLoader();
         String beanClassName = bd.getBeanClassName();
         try {
-            assert classLoader != null;
             Class<?> clz = classLoader.loadClass(beanClassName);
-            // by reflect
+            // ? by reflect,can only with null arg constructor TODO
             return clz.newInstance();
         } catch (Exception e) {
-            throw new BeanCreationException("Create the bean for" + beanClassName + "failed");
+            throw new BeanCreationException("Create the bean for: " + beanClassName + " failed");
+        }
+    }
+
+
+    private Object createBean(BeanDefinition definition) {
+        // create instance.
+        Object bean = instantiateBean(definition);
+        // set properties.
+        populateBean(definition, bean);
+        return bean;
+    }
+
+    protected void populateBean(BeanDefinition definition, Object bean) {
+        List<PropertyValue> propertyValues = definition.getPropertyValues();
+        if (propertyValues.isEmpty() || propertyValues == null) {
+            return;
+        }
+        BeanDefinitionResolver resolver = new BeanDefinitionResolver(this);
+        try {
+            for (PropertyValue pv : propertyValues) {
+                String propertyName = pv.getName();
+                Object originValue = pv.getValue();
+                Object resolveValue = resolver.resolveValueIfNecessary(originValue);
+                // ! how to set into the object ? !!!
+                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor pd : propertyDescriptors) {
+                    if (pd.getName().equals(propertyName)) {
+                        pd.getWriteMethod().invoke(bean, resolveValue);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            throw new BeanCreationException("Fail to obtain bean for class [" + definition.getBeanClassName() + " ] ");
         }
     }
 
     @Override
     public ClassLoader getBeanClassLoader() {
-        return this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader();
+        return (this.beanClassLoader != null ? this.beanClassLoader : ClassUtils.getDefaultClassLoader());
     }
 
     @Override

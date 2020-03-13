@@ -3,7 +3,7 @@ package org.breeze.test.v1;
 import context.ApplicationContext;
 import context.support.ClassPathXmlApplicationContext;
 import context.support.FileSystemXmlApplicationContext;
-import org.breeze.service.v1.Wind;
+import org.breeze.entity.v1.Wind;
 import org.junit.Assert;
 import org.junit.Test;
 

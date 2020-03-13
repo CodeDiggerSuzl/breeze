@@ -1,12 +1,18 @@
 package beans.factory.support;
 
 import beans.BeanDefinition;
+import beans.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Suz1
  * @date 2020/3/10 9:06
  */
 public class GenericBeanDefinition implements BeanDefinition {
+    List<PropertyValue> propertyValues = new ArrayList<>();
+
     /**
      * Bean id
      */
@@ -15,7 +21,6 @@ public class GenericBeanDefinition implements BeanDefinition {
     private boolean singleton = true;
     private boolean prototype = false;
     private String scope = SCOPE_DEFAULT;
-
 
     public GenericBeanDefinition(String id, String beanClassName) {
         this.id = id;
@@ -73,6 +78,16 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public String getBeanClassName() {
         return this.beanClassName;
+    }
+
+    /**
+     * Get property value.
+     *
+     * @return list of value.
+     */
+    @Override
+    public List<PropertyValue> getPropertyValues() {
+        return this.propertyValues;
     }
 
     public String getId() {
