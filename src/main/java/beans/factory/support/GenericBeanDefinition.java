@@ -65,7 +65,7 @@ public class GenericBeanDefinition implements BeanDefinition {
     @Override
     public void setScope(String scope) {
         this.scope = scope;
-        // if the input is SCOPE_SINGLETON or "",the is singleton otherwise is the prototype.
+        // if the input is SCOPE_SINGLETON or "",the is singleton otherwise is the prototype. It's a trick.
         this.singleton = SCOPE_SINGLETON.equals(scope) || SCOPE_DEFAULT.equals(scope);
         this.prototype = SCOPE_PROTOTYPE.equals(scope);
     }

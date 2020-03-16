@@ -13,7 +13,7 @@ public interface TypeConverter {
      * @param requiredType typeClass.
      * @param <T>          type.
      * @return Certain type with certain value.
-     * @throws TypeMismatchException
+     * @throws TypeMismatchException several types.
      */
     <T> T convertIfNecessary(Object value, Class<T> requiredType) throws TypeMismatchException;
 }

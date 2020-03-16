@@ -5,6 +5,7 @@ import beans.BeanDefinition;
 import beans.PropertyValue;
 import beans.SimpleTypeConverter;
 import config.ConfigurableBeanFactory;
+import org.apache.commons.beanutils.BeanUtils;
 import util.ClassUtils;
 
 import java.beans.BeanInfo;
@@ -93,10 +94,17 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         // create instance.
         Object bean = instantiateBean(definition);
         // set properties.
-        populateBean(definition, bean);
+        populateBeanWithBeanUtils(definition, bean);
         return bean;
     }
 
+
+    /**
+     * Set bean properties with {@link Introspector} api
+     *
+     * @param definition bean definition
+     * @param bean       target bean
+     */
     protected void populateBean(BeanDefinition definition, Object bean) {
         List<PropertyValue> propertyValues = definition.getPropertyValues();
         if (propertyValues.isEmpty() || propertyValues == null) {
@@ -123,6 +131,30 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
             }
         } catch (Exception ex) {
             throw new BeanCreationException("Fail to obtain bean for class [" + definition.getBeanClassName() + " ] ");
+        }
+    }
+
+    /**
+     * PopulateBean with apache-bean-utils, mach easier to use. Do not need converter.
+     *
+     * @param definition bean definition
+     * @param bean       target bean
+     */
+    private void populateBeanWithBeanUtils(BeanDefinition definition, Object bean) {
+        List<PropertyValue> pvs = definition.getPropertyValues();
+        if (pvs == null || pvs.isEmpty()) {
+            return;
+        }
+        BeanDefinitionResolver resolver = new BeanDefinitionResolver(this);
+        try {
+            for (PropertyValue pv : pvs) {
+                String propertyName = pv.getName();
+                Object originValue = pv.getValue();
+                Object resolvedValue = resolver.resolveValueIfNecessary(originValue);
+                BeanUtils.setProperty(bean, propertyName, resolvedValue);
+            }
+        } catch (Exception e) {
+            throw new BeanCreationException("Populate Bean failed for class [" + definition.getBeanClassName() + " ] ");
         }
     }
 

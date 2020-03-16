@@ -26,7 +26,7 @@ public class SimpleTypeConverter implements TypeConverter {
      * @param value        value.
      * @param requiredType typeClass.
      * @return Certain type with certain value.
-     * @throws TypeMismatchException
+     * @throws TypeMismatchException {@link TypeMismatchException} only several types, not all types.
      */
     @Override
     public <T> T convertIfNecessary(Object value, Class<T> requiredType) throws TypeMismatchException {
