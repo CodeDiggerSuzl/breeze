@@ -107,7 +107,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
      */
     protected void populateBean(BeanDefinition definition, Object bean) {
         List<PropertyValue> propertyValues = definition.getPropertyValues();
-        if (propertyValues.isEmpty() || propertyValues == null) {
+        if (propertyValues == null || propertyValues.isEmpty()) {
             return;
         }
         BeanDefinitionResolver resolver = new BeanDefinitionResolver(this);
