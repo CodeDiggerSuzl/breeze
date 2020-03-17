@@ -2,6 +2,7 @@ package beans.factory.xml;
 
 import beans.BeanDefinition;
 import beans.BeanDefinitionStoreException;
+import beans.ConstructorArgument;
 import beans.PropertyValue;
 import beans.factory.support.BeanDefinitionRegistry;
 import beans.factory.support.GenericBeanDefinition;
@@ -27,17 +28,20 @@ import java.util.Iterator;
  */
 public class XmlBeanDefinitionReader {
     // Basic definitions.
-
     public static final String ID_ATTRIBUTE = "id";
     public static final String CLASS_ATTRIBUTE = "class";
     public static final String SCOPE_ATTRIBUTE = "scope";
 
     // For Setter injection.
-
     public static final String PROPERTY_ELEMENT = "property";
     public static final String REF_ATTRIBUTE = "ref";
     public static final String VALUE_ATTRIBUTE = "value";
     public static final String NAME_ATTRIBUTE = "name";
+
+    // for constructor injection.
+    public static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
+    public static final String TYPE_ATTRIBUTE = "type";
+
     // for log
     protected final Log Logger = LogFactory.getLog(getClass());
 
@@ -72,6 +76,7 @@ public class XmlBeanDefinitionReader {
                 if (element.attribute(SCOPE_ATTRIBUTE) != null) {
                     beanDef.setScope(element.attributeValue(SCOPE_ATTRIBUTE));
                 }
+                parseConstructorArgElements(element, beanDef);
                 parsePropertyElement(element, beanDef);
                 // judge the bean is singleton,if is singleton => only create one single instance.
                 // the next time when trying to get bean,then return this only instance.
@@ -128,6 +133,29 @@ public class XmlBeanDefinitionReader {
             return new TypeStringValue(element.attributeValue(VALUE_ATTRIBUTE));
         } else {
             throw new RuntimeException(elementName + "must specify a ref or value");
+        }
+    }
+
+    public void parseConstructorArgElement(Element ele, BeanDefinition bd) {
+        String typeAttr = ele.attributeValue(TYPE_ATTRIBUTE);
+        String nameAttr = ele.attributeValue(NAME_ATTRIBUTE);
+        Object value = parsePropertyValue(ele, bd, null);
+        ConstructorArgument.ValueHolder valueHolder = new ConstructorArgument.ValueHolder(value);
+        if (StringUtils.hasLength(typeAttr)) {
+            valueHolder.setType(typeAttr);
+        }
+        if (StringUtils.hasLength(nameAttr)) {
+            valueHolder.setName(nameAttr);
+        }
+        // set into bean definition
+        bd.getConstructorArguments().addArgumentValue(valueHolder);
+    }
+
+    public void parseConstructorArgElements(Element beanEle, BeanDefinition bd) {
+        Iterator iterator = beanEle.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+        while (iterator.hasNext()) {
+            Element ele = (Element) iterator.next();
+            parseConstructorArgElement(ele, bd);
         }
     }
 }

@@ -1,5 +1,6 @@
 package beans.factory.support;
 
+import config.ConfigurableBeanFactory;
 import config.RunTimeBeanReference;
 import config.TypeStringValue;
 
@@ -10,9 +11,11 @@ import config.TypeStringValue;
  * @date 2020/3/13 8:46 上午
  */
 public class BeanDefinitionResolver {
-    private final DefaultBeanFactory factory;
+    // use ConfigurableBeanFactory
+    //    private final DefaultBeanFactory factory;
+    private final ConfigurableBeanFactory factory;
 
-    public BeanDefinitionResolver(DefaultBeanFactory factory) {
+    public BeanDefinitionResolver(ConfigurableBeanFactory factory) {
         this.factory = factory;
     }
 

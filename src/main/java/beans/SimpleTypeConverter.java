@@ -46,7 +46,6 @@ public class SimpleTypeConverter implements TypeConverter {
             } else {
                 throw new RuntimeException("Todo: cant't converter value for " + value + " class: " + requiredType);
             }
-
         }
     }
 

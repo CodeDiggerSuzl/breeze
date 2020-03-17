@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="petStore" class="org.breeze.entity.v3.PetStore">
+        <constructor-arg ref="account"/>
+        <constructor-arg ref="item"/>
+        <constructor-arg value="1"/>
+    </bean>
+
+    <bean id="account" class="org.breeze.entity.v3.Account"/>
+    <bean id="item" class="org.breeze.entity.v3.Item"/>
+</beans>

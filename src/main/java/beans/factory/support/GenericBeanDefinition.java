@@ -1,6 +1,7 @@
 package beans.factory.support;
 
 import beans.BeanDefinition;
+import beans.ConstructorArgument;
 import beans.PropertyValue;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class GenericBeanDefinition implements BeanDefinition {
     List<PropertyValue> propertyValues = new ArrayList<>();
-
+    private ConstructorArgument constructorArgument = new ConstructorArgument();
     /**
      * Bean id
      */
@@ -90,7 +91,28 @@ public class GenericBeanDefinition implements BeanDefinition {
         return this.propertyValues;
     }
 
+    /**
+     * For constructor.
+     *
+     * @return {@link ConstructorArgument}
+     */
+    @Override
+    public ConstructorArgument getConstructorArguments() {
+        return constructorArgument;
+    }
+
+    @Override
     public String getId() {
-        return id;
+        return this.id;
+    }
+
+    /**
+     * if has constructor.
+     *
+     * @return has or not constructor.
+     */
+    @Override
+    public boolean hasConstructorArgumentValues() {
+        return !this.constructorArgument.isEmpty();
     }
 }

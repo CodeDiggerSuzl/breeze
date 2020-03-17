@@ -52,4 +52,25 @@ public interface BeanDefinition {
      * @return list of value.
      */
     List<PropertyValue> getPropertyValues();
+
+    /**
+     * For constructor.
+     *
+     * @return {@link ConstructorArgument}
+     */
+    ConstructorArgument getConstructorArguments();
+
+    /**
+     * get bean id
+     *
+     * @return id of the bean in xml
+     */
+    String getId();
+
+    /**
+     * if has constructor.
+     *
+     * @return has or not constructor.
+     */
+    boolean hasConstructorArgumentValues();
 }
