@@ -42,7 +42,9 @@ public class XmlBeanDefinitionReader {
     public static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
     public static final String TYPE_ATTRIBUTE = "type";
 
-    // for log
+    /**
+     * For log.
+     */
     protected final Log Logger = LogFactory.getLog(getClass());
 
     BeanDefinitionRegistry registry;
