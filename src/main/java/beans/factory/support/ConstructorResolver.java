@@ -26,17 +26,17 @@ public class ConstructorResolver {
     }
 
     /**
-     * AutoWire Bean.Tips: this is how autowire works.
+     * AutoWire Bean.Tips: this is how auto wire works.
      * <p>
      * Find a proper constructor and use it to create a new instance.
      * <p>
-     * 1. the xml file defined count(constructor) == the count(constructor) in bean.
-     * 2. if is ref, check if it can create the instance,if string check if can ben converted.
+     * 1. the xml file defined count(constructor) == the count(constructor) in the bean.
+     * 2. if is ref, check if it can create the instance,if string check is it can ben converted.
      *
      * @param bd bean definition.
-     * @return
+     * @return converted bean.
      */
-    public Object autowireConstructor(final BeanDefinition bd) {
+    public Object autoWireConstructor(final BeanDefinition bd) {
         Constructor<?> constructorToUse = null;
         Object[] argsToUse = null;
         Class<?> beanClass;
@@ -59,8 +59,8 @@ public class ConstructorResolver {
 
         for (Constructor<?> candidate : candidates) {
             Class<?>[] parameterTypes = candidate.getParameterTypes();
-            // judge the length of each candidates defined in bean.
-//            if (parameterTypes.length != candidates.length) {
+            // judge each of the length of candidates defined in the bean.
+            // if (parameterTypes.length != candidates.length) { ! had a bug in here.
             if (parameterTypes.length != args.getArgumentCount()) {
                 continue;
             }
@@ -87,7 +87,7 @@ public class ConstructorResolver {
         try {
             return constructorToUse.newInstance(argsToUse);
         } catch (Exception e) {
-            throw new BeanCreationException(bd.getId(), "can't find a create instance using " + constructorToUse);
+            throw new BeanCreationException(bd.getId(), "can't find a created instance using " + constructorToUse);
         }
     }
 
@@ -115,7 +115,7 @@ public class ConstructorResolver {
             try {
                 // get the real value
                 Object resolvedValue = resolver.resolveValueIfNecessary(originValue);
-                // judge if is matched, or can be converted
+                // judge if it is matched, or can be converted
                 Object convertedValue = typeConverter.convertIfNecessary(resolvedValue, parameterTypes[i]);
                 argsToUse[i] = convertedValue;
             } catch (Exception e) {

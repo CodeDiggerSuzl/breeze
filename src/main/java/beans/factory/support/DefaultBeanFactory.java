@@ -81,7 +81,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         // if has constructor
         if (bd.hasConstructorArgumentValues()) {
             ConstructorResolver resolver = new ConstructorResolver(this);
-            return resolver.autowireConstructor(bd);
+            return resolver.autoWireConstructor(bd);
         } else {
 
             ClassLoader classLoader = this.getBeanClassLoader();

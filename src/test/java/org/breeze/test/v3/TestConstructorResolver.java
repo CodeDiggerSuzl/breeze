@@ -27,7 +27,7 @@ public class TestConstructorResolver {
 
         ConstructorResolver resolver = new ConstructorResolver(factory);
         // So this is the autowired
-        PetStore petStore = (PetStore) resolver.autowireConstructor(bd);
+        PetStore petStore = (PetStore) resolver.autoWireConstructor(bd);
         int value = petStore.getYear();
         Assert.assertEquals(1, petStore.getYear());
         Assert.assertNotNull(petStore.getAccount());

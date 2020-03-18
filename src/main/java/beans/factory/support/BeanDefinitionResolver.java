@@ -12,7 +12,10 @@ import config.TypeStringValue;
  */
 public class BeanDefinitionResolver {
     // use ConfigurableBeanFactory
-    //    private final DefaultBeanFactory factory;
+    // private final DefaultBeanFactory factory;
+    /**
+     * Use the configurable factory to make it better.
+     */
     private final ConfigurableBeanFactory factory;
 
     public BeanDefinitionResolver(ConfigurableBeanFactory factory) {
@@ -30,7 +33,7 @@ public class BeanDefinitionResolver {
         } else if (value instanceof TypeStringValue) {
             return ((TypeStringValue) value).getValue();
         } else {
-            // TODO: maybe inner bean.
+            // TODO: a maybe inner bean or other types.
             throw new RuntimeException("The value " + value + "has not been implemented.");
         }
     }
