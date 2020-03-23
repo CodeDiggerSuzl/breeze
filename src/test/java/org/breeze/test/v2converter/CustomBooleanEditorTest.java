@@ -1,4 +1,4 @@
-package org.breeze.test.v2;
+package org.breeze.test.v2converter;
 
 import beans.propertyeditors.CustomBooleanEditor;
 import org.junit.Assert;

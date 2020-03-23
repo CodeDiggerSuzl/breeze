@@ -1,4 +1,4 @@
-package org.breeze.test.v3;
+package org.breeze.test.v3constructor;
 
 import context.support.ClassPathXmlApplicationContext;
 import org.breeze.entity.v3.PetStore;

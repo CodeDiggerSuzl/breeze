@@ -1,4 +1,4 @@
-package org.breeze.test.v1;
+package org.breeze.test.v1basic;
 
 import context.ApplicationContext;
 import context.support.ClassPathXmlApplicationContext;

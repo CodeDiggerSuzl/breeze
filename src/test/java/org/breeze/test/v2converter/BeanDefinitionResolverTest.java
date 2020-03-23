@@ -1,4 +1,4 @@
-package org.breeze.test.v2;
+package org.breeze.test.v2converter;
 
 import beans.factory.support.BeanDefinitionResolver;
 import beans.factory.support.DefaultBeanFactory;

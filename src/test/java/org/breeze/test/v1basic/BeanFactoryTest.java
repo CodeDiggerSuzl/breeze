@@ -1,4 +1,4 @@
-package org.breeze.test.v1;
+package org.breeze.test.v1basic;
 
 import beans.BeanCreationException;
 import beans.BeanDefinition;

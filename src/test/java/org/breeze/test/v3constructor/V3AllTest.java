@@ -1,4 +1,4 @@
-package org.breeze.test.v3;
+package org.breeze.test.v3constructor;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

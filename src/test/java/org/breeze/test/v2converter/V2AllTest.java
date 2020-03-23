@@ -1,4 +1,4 @@
-package org.breeze.test.v2;
+package org.breeze.test.v2converter;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

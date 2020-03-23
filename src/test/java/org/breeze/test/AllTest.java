@@ -1,8 +1,8 @@
 package org.breeze.test;
 
-import org.breeze.test.v1.V1AllTest;
-import org.breeze.test.v2.V2AllTest;
-import org.breeze.test.v3.V3AllTest;
+import org.breeze.test.v1basic.V1AllTest;
+import org.breeze.test.v2converter.V2AllTest;
+import org.breeze.test.v3constructor.V3AllTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

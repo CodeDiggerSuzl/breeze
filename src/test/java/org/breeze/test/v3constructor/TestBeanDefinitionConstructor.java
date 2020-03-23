@@ -1,4 +1,4 @@
-package org.breeze.test.v3;
+package org.breeze.test.v3constructor;
 
 import beans.BeanDefinition;
 import beans.ConstructorArgument;

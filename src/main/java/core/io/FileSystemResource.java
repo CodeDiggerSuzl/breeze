@@ -16,6 +16,16 @@ public class FileSystemResource implements Resource {
     private final String path;
     private final File file;
 
+    /**
+     * File constructor, for autowired usage.
+     *
+     * @param file {@link File}
+     */
+    public FileSystemResource(File file) {
+        this.path = file.getPath();
+        this.file = file;
+    }
+
     public FileSystemResource(String path) {
         Assert.notNull(path, "Path can not be null");
         this.file = new File(path);
