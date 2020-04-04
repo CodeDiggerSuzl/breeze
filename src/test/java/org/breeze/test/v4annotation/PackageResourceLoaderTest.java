@@ -17,7 +17,7 @@ public class PackageResourceLoaderTest {
         PackageResourceLoader loader = new PackageResourceLoader();
 
         Resource[] resources = loader.getResources("org.breeze.entity.v4annotation");
-        Assert.assertEquals(2, resources.length);
+        Assert.assertEquals(3, resources.length);
     }
 
 }

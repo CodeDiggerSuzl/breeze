@@ -1,7 +1,5 @@
 package util;
 
-import lombok.extern.slf4j.Slf4j;
-
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +10,6 @@ import java.util.Map;
  * @author Suz1
  * @date 2020/3/10 19:52
  */
-@Slf4j
 public abstract class ClassUtils {
 
     private static final char PACKAGE_SEPARATOR = '.';
@@ -46,7 +43,6 @@ public abstract class ClassUtils {
             PRIMITIVE_TYPE_TO_WRAPPER_MAP.put(entry.getValue(), entry.getKey());
 
         }
-
     }
 
     /**
