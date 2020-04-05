@@ -36,5 +36,4 @@ final class AnnotationAttributeReadingVisitor extends AnnotationVisitor {
         this.attributes.put(attributeName, attributeValue);
     }
 
-
 }

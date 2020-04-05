@@ -1,5 +1,6 @@
 package core.type.classreading;
 
+import core.type.AnnotationMetadata;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.Type;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  * @author Suz1
  * @date 2020/4/4 11:40 下午
  */
-public class AnnotationMetadataReadingVisitor extends ClassMetaDataReadingVisitor {
+public class AnnotationMetadataReadingVisitor extends ClassMetaDataReadingVisitor implements AnnotationMetadata {
     private final Set<String> annotationSet = new LinkedHashSet<>(4);
     private final Map<String, AnnotationAttributes> attributesMap = new LinkedHashMap<>(4);
 
@@ -26,10 +27,13 @@ public class AnnotationMetadataReadingVisitor extends ClassMetaDataReadingVisito
     }
 
 
+    @Override
     public Set<String> getAnnotationTypes() { return this.annotationSet; }
 
 
+    @Override
     public boolean hasAnnotation(String annotationType) {return this.annotationSet.contains(annotationType);}
 
+    @Override
     public AnnotationAttributes getAnnotationAttributes(String annotationType) { return this.attributesMap.get(annotationType); }
 }
