@@ -69,6 +69,7 @@ public class XmlBeanDefinitionReader {
             // <beans>
             Element root = doc.getRootElement();
             Iterator<Element> iterator = root.elementIterator();
+
             while (iterator.hasNext()) {
                 Element element = (Element) iterator.next();
                 String id = element.attributeValue(ID_ATTRIBUTE);
@@ -85,6 +86,7 @@ public class XmlBeanDefinitionReader {
                 this.registry.registerBeanDefinition(id, beanDef);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BeanDefinitionStoreException("IO Exception while parsing XML document form " + resource.getDescription(), e);
         } finally {
             if (is != null) {

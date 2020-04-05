@@ -43,7 +43,7 @@ public class ClassReaderTest {
         // 2. get annotation
         // 3. get annotation values
         reader.accept(visitor, ClassReader.SKIP_DEBUG);
-        String annotation = "org.breeze.stereotype.Component";
+        String annotation = "stereotype.Component";
         System.out.println(visitor.hasAnnotation(annotation));
         Assert.assertTrue(visitor.hasAnnotation(annotation));
         AnnotationAttributes attributes = visitor.getAnnotationAttributes(annotation);

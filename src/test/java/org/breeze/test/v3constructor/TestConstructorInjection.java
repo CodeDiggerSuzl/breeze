@@ -16,7 +16,7 @@ public class TestConstructorInjection {
 
     @Before
     public void setup() {
-        context = new ClassPathXmlApplicationContext("petStore-constructor");
+        context = new ClassPathXmlApplicationContext("petStore-constructor.xml");
         petStore = (PetStore) context.getBean("petStore");
     }
 
